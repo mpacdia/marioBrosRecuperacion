@@ -28,10 +28,12 @@ public class marioMovement : MonoBehaviour
     public AudioSource yahu;
 
     public int lifeLeft = 1;
+    public int goombaLifeLeft = 1;
 
     public bool grow;
 
     public Animator emptyMario;
+    public Animator goombaAnimator;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -92,6 +94,7 @@ public class marioMovement : MonoBehaviour
 
         animator.SetFloat("speedY", rb.velocity.y);
         animator.SetFloat("speedX", rb.velocity.x);
+        goombaAnimator.SetInteger("lifeGoomba", goombaLifeLeft);
 
         if (grow)
         {
@@ -109,6 +112,10 @@ public class marioMovement : MonoBehaviour
             emptyMario.enabled = true;
             col.enabled = false;
         }
+
+        
+
+        Debug.Log(rb.velocity.y);
     }
 
     public void FixedUpdate()
@@ -137,8 +144,15 @@ public class marioMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "goomba")
         {
-            grow = false;
-            lifeLeft -= 1;
+            if (rb.velocity.y == 0)
+            {
+                grow = false;
+                lifeLeft -= 1;
+            }
+            if (rb.velocity.y < 0)
+            {
+                goombaLifeLeft = 0;
+            }
         }
 
         if (collision.gameObject.tag == "mushroom")
@@ -146,5 +160,7 @@ public class marioMovement : MonoBehaviour
             grow = true;
             lifeLeft = 2;
         }
+
+        
     }
 }

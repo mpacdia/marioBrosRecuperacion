@@ -6,9 +6,10 @@ public class goomba : MonoBehaviour
 {
     public float goombaSpeed = 1f;
 
+
     private void Update()
     {
-        gameObject.transform.position = ;
+        transform.Translate(goombaSpeed * Vector2.left * Time.deltaTime, Space.World);
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -17,5 +18,10 @@ public class goomba : MonoBehaviour
         {
             goombaSpeed *=  -1;
         }
+    }
+
+    public void goombaDies()
+    {
+        Destroy(gameObject);
     }
 }

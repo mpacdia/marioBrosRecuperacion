@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ground
+  - mario
+  - mushroom
+  - goomba
+  - triggerGoomba
+  - goombaHead
   layers:
   - Default
   - TransparentFX
