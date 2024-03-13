@@ -31,6 +31,8 @@ public class marioMovement : MonoBehaviour
 
     public bool grow;
 
+    public Animator emptyMario;
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private void Awake()
@@ -59,7 +61,10 @@ public class marioMovement : MonoBehaviour
         grow = false;
 
         marioSpeed = 5f;
-        jumpHeight = 100f;
+        jumpHeight = 5f;
+
+        emptyMario.enabled = false;
+        col.enabled = true;
     }
 
     // Update is called once per frame
@@ -98,9 +103,15 @@ public class marioMovement : MonoBehaviour
             animator.SetLayerWeight(1, 0f);
             animator.SetLayerWeight(0, 1f);
         }
+
+        if (lifeLeft == 0)
+        {
+            emptyMario.enabled = true;
+            col.enabled = false;
+        }
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         localSpeed = new Vector2(movX * marioSpeed, rb.velocity.y);
 
@@ -115,7 +126,7 @@ public class marioMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "ground")
         {
@@ -129,10 +140,7 @@ public class marioMovement : MonoBehaviour
             grow = false;
             lifeLeft -= 1;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.gameObject.tag == "mushroom")
         {
             grow = true;
